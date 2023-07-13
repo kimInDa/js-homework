@@ -25,12 +25,28 @@ function pwReg(text){
 }
 
 
+const userEmail = document.querySelector('#userEmail');
+const userPassword = document.querySelector('#userPassword');
+const loginButton = document.querySelector('.btn-login');
 
+function validationCheck(){
 
+  if(!emailReg(this.value) && !pwReg(this.value)){
+    this.classList.add('is--invalid')
+  } else{
+    this.classList.remove('is--invalid');
+  }
+  
+}
 
+function loginSubmit(){  
+  if(userEmail.value === user.id && userPassword.value === user.pw){
+    window.location.href = 'welcome.html';
+  } else {
+    alert('아이디(이메일) 또는 비밀번호를 잘못 입력했습니다.')
+  }
+}
 
-
-
-
-
-
+userEmail.addEventListener('input', validationCheck);
+userPassword.addEventListener('input', validationCheck);
+loginButton.addEventListener('click', loginSubmit);
