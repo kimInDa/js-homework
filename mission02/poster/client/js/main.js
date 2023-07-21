@@ -1,3 +1,6 @@
+import { getNode } from '../lib/dom/index.js'
+import { data } from './index.js'
+
 
 /* 
 
@@ -10,8 +13,8 @@
 */
 
 
-
-
+const nav = getNode('.nav');
+console.log(data[2]);
 
 
 
