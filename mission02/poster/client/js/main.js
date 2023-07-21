@@ -1,20 +1,62 @@
-import { getNode } from '../lib/dom/index.js'
+
+import { getNode, addClass, getNodes, removeClass, attr, css } from '../lib/dom/index.js'
 import { data } from './index.js'
 
 
-/* 
-
-1. 클릭 이벤트 활성화
-2. nav 클릭시 배경 색상 변경
-3. 이미지 변경
-4. 텍스트 변경
-5. 함수 분리
-
-*/
-
 
 const nav = getNode('.nav');
-console.log(data[2]);
+const list = getNodes('li');
+const nickName = getNode('.nickName');
+const visualImage = getNode('.visual img');
+const body = getNode('body');
+
+
+
+function setNameText(dataIndex){
+  
+  nickName.textContent = dataIndex.name;
+  
+}
+
+
+function setBgColor(dataIndex){
+  const dataColor= dataIndex.color;
+  const value = `linear-gradient(to bottom,${dataColor})`
+  css(body,'background',value);
+}
+
+
+function setImage(dataIndex){
+
+  attr(visualImage,'src',`./assets/${dataIndex.name.toLowerCase()}.jpeg`);
+  attr(visualImage,'alt',`${dataIndex.alt}`);
+
+}
+
+
+function handleSlider(e){
+
+  const target = e.target.closest('li');
+  if (!target) return;
+  
+  list.forEach((li)=>{
+    removeClass(li,'is-active');
+  })
+  
+  addClass(target,'is-active');
+
+
+  const index = attr(target,'data-index');
+  const dataIndex = data[index - 1];
+
+  setBgColor(dataIndex);
+  setNameText(dataIndex);
+  setImage(dataIndex);
+
+}
+
+
+nav.addEventListener('click', handleSlider);
 
 
 
