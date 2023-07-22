@@ -10,6 +10,7 @@ import { data } from './index.js';
 import { AudioPlayer } from './audio.js';
 
 
+
 const nav = getNode('.nav');
 const list = getNodes('li');
 
@@ -24,6 +25,17 @@ function getIndex(node){
 function getIndexData(node){
 
   return data[getIndex(node) - 1];
+
+}
+
+
+function setBgColor(indexData) {
+
+  const body = getNode('body');
+  const dataColor = indexData.color;
+  const value = `linear-gradient(to bottom,${dataColor})`;
+
+  css(body, 'background', value);
 
 }
 
@@ -43,17 +55,6 @@ function setImage(indexData) {
 
   attr(visualImage, 'src', `./assets/${indexData.name.toLowerCase()}.jpeg`);
   attr(visualImage, 'alt', `${indexData.alt}`);
-
-}
-
-
-function setBgColor(indexData) {
-
-  const body = getNode('body');
-  const dataColor = indexData.color;
-  const value = `linear-gradient(to bottom,${dataColor})`;
-
-  css(body, 'background', value);
 
 }
 
@@ -96,11 +97,11 @@ function handleSlider(e) {
   
   let indexData = getIndexData(target);
 
+  setBgColor(indexData);
+  
   setNickName(indexData);
 
   setImage(indexData);
-
-  setBgColor(indexData);
 
   playAudio(indexData);
 
