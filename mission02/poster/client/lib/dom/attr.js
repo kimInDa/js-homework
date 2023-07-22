@@ -1,21 +1,23 @@
-import { getNode } from './index.js';
+import { getNode, isString } from './index.js';
 
 
 function getAttr(node,prop){
   
-  if(typeof node === 'string') node = getNode(node);
+  if(isString(node)) node = getNode(node);
 
   return node.getAttribute(prop);
 }
 
 function setAttr(node,prop,value){
 
-  if(typeof node === 'string') node = getNode(node);
+  if(isString(node)) node = getNode(node);
 
-  if(typeof prop !== 'string'){
+  if(!isString(prop)){
     throw new TypeError('setAttr 함수의 두 번째 인수는 문자 타입이어야 합니다.');
   }
-
+  if(!value){
+    throw new Error('setAttr 함수의 세 번째 인수는 필수 값이어야 합니다.')
+  }  
   if(!node[prop] && prop !== 'class' && prop !== 'title'){
     node.dataset[prop] = value;
     return;

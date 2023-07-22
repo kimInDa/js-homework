@@ -1,66 +1,110 @@
-
-import { getNode, addClass, getNodes, removeClass, attr, css } from '../lib/dom/index.js'
-import { data } from './index.js'
-
+import {
+  getNode,
+  addClass,
+  getNodes,
+  removeClass,
+  attr,
+  css,
+} from '../lib/dom/index.js';
+import { data } from './index.js';
+import { AudioPlayer } from './audio.js';
 
 
 const nav = getNode('.nav');
 const list = getNodes('li');
-const nickName = getNode('.nickName');
-const visualImage = getNode('.visual img');
-const body = getNode('body');
 
 
 
-function setNameText(dataIndex){
-  
-  nickName.textContent = dataIndex.name;
-  
+function getIndex(node){
+
+  return attr(node,'data-index');
+
 }
 
+function getIndexData(node){
 
-function setBgColor(dataIndex){
-  const dataColor= dataIndex.color;
-  const value = `linear-gradient(to bottom,${dataColor})`
-  css(body,'background',value);
-}
-
-
-function setImage(dataIndex){
-
-  attr(visualImage,'src',`./assets/${dataIndex.name.toLowerCase()}.jpeg`);
-  attr(visualImage,'alt',`${dataIndex.alt}`);
+  return data[getIndex(node) - 1];
 
 }
 
 
-function handleSlider(e){
+function setNickName(indexData) {
 
-  const target = e.target.closest('li');
+  const nickName = getNode('.nickName');
+
+  nickName.textContent = indexData.name;
+
+}
+
+
+function setImage(indexData) {
+
+  const visualImage = getNode('.visual img');
+
+  attr(visualImage, 'src', `./assets/${indexData.name.toLowerCase()}.jpeg`);
+  attr(visualImage, 'alt', `${indexData.alt}`);
+
+}
+
+
+function setBgColor(indexData) {
+
+  const body = getNode('body');
+  const dataColor = indexData.color;
+  const value = `linear-gradient(to bottom,${dataColor})`;
+
+  css(body, 'background', value);
+
+}
+
+
+function setAudio(indexData){
+  const source = `./assets/audio/${indexData.name}.m4a`;
+  const audio = new AudioPlayer(source);
+  return audio;
+};
+
+
+const playAudio = (()=>{
+
+  let voice;
+
+  return function a(indexData){
+    if(!voice){
+      voice = setAudio(indexData);
+      voice.play();
+    } else{
+      voice.stop();
+      voice = setAudio(indexData);
+      voice.play();
+    }
+  }
+})();
+
+
+function handleSlider(e) {
+
+  let target = e.target.closest('li');
   if (!target) return;
+
+  list.forEach((li) => {
+    removeClass(li, 'is-active');
+  });
+
+  addClass(target, 'is-active');
+
   
-  list.forEach((li)=>{
-    removeClass(li,'is-active');
-  })
-  
-  addClass(target,'is-active');
+  let indexData = getIndexData(target);
 
+  setNickName(indexData);
 
-  const index = attr(target,'data-index');
-  const dataIndex = data[index - 1];
+  setImage(indexData);
 
-  setBgColor(dataIndex);
-  setNameText(dataIndex);
-  setImage(dataIndex);
+  setBgColor(indexData);
+
+  playAudio(indexData);
 
 }
 
 
 nav.addEventListener('click', handleSlider);
-
-
-
-
-
-
-
