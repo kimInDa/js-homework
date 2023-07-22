@@ -13,6 +13,9 @@ import { AudioPlayer } from './audio.js';
 
 const nav = getNode('.nav');
 const list = getNodes('li');
+const body = getNode('body');
+const nickName = getNode('.nickName');
+const visualImage = getNode('.visual img');
 
 
 
@@ -29,32 +32,29 @@ function getIndexData(node){
 }
 
 
-function setBgColor(indexData) {
+function setBgColor(node,indexData) {
 
-  const body = getNode('body');
   const dataColor = indexData.color;
   const value = `linear-gradient(to bottom,${dataColor})`;
 
-  css(body, 'background', value);
+  css(node, 'background', value);
 
 }
 
 
-function setNickName(indexData) {
+function setNickName(node,indexData) {
 
-  const nickName = getNode('.nickName');
 
-  nickName.textContent = indexData.name;
+  node.textContent = indexData.name;
 
 }
 
 
-function setImage(indexData) {
+function setImage(node,indexData) {
 
-  const visualImage = getNode('.visual img');
 
-  attr(visualImage, 'src', `./assets/${indexData.name.toLowerCase()}.jpeg`);
-  attr(visualImage, 'alt', `${indexData.alt}`);
+  attr(node, 'src', `./assets/${indexData.name.toLowerCase()}.jpeg`);
+  attr(node, 'alt', `${indexData.alt}`);
 
 }
 
@@ -97,11 +97,11 @@ function handleSlider(e) {
   
   let indexData = getIndexData(target);
 
-  setBgColor(indexData);
+  setBgColor(body,indexData);
   
-  setNickName(indexData);
+  setNickName(nickName,indexData);
 
-  setImage(indexData);
+  setImage(visualImage,indexData);
 
   playAudio(indexData);
 
