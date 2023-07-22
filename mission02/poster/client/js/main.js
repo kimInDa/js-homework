@@ -44,7 +44,6 @@ function setBgColor(node,indexData) {
 
 function setNickName(node,indexData) {
 
-
   node.textContent = indexData.name;
 
 }
