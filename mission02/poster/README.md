@@ -14,7 +14,7 @@
   1. [이벤트 처리 방식](#1-이벤트-처리-방식-이벤트-위임-반복문)
 
   2. [배경 색상, 캐릭터 이름, 비주얼 이미지 변경](#2-배경-색상-캐릭터-이름-비주얼-이미지-변경)
-  
+
   3. [캐릭터별 음성 변경](#3-캐릭터별-음성-변경)
 
 </br>
@@ -33,6 +33,10 @@
 ```js
 const nav = getNode('.nav');
 const list = getNodes('li');
+const body = getNode('body');
+const nickName = getNode('.nickName');
+const visualImage = getNode('.visual img');
+
 
 
 function handleSlider(e) {
@@ -108,7 +112,6 @@ function setNickName(node,indexData) {
 
 
 function setImage(node,indexData) {
-
 
   attr(node, 'src', `./assets/${indexData.name.toLowerCase()}.jpeg`);
   attr(node, 'alt', `${indexData.alt}`);

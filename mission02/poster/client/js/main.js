@@ -51,7 +51,6 @@ function setNickName(node,indexData) {
 
 function setImage(node,indexData) {
 
-
   attr(node, 'src', `./assets/${indexData.name.toLowerCase()}.jpeg`);
   attr(node, 'alt', `${indexData.alt}`);
 
