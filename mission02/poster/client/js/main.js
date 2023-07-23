@@ -68,7 +68,7 @@ const playAudio = (()=>{
 
   let voice;
 
-  return function a(indexData){
+  return (indexData)=>{
     if(!voice){
       voice = setAudio(indexData);
       voice.play();
